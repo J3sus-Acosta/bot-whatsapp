@@ -7,11 +7,15 @@ const MySQLAdapter = require('@bot-whatsapp/database/mysql')
 /**
  * Declaramos las conexiones de MySQL
  */
-const MYSQL_DB_HOST = 'localhost'
-const MYSQL_DB_USER = 'root'
-const MYSQL_DB_PASSWORD = 'example'
-const MYSQL_DB_NAME = 'bot'
-const MYSQL_DB_PORT = '3306'
+require('dotenv').config();
+
+const MYSQL_DB_HOST = process.env.MYSQL_DB_HOST;
+const MYSQL_DB_USER = process.env.MYSQL_DB_USER;
+const MYSQL_DB_PASSWORD = process.env.MYSQL_DB_PASSWORD;
+const MYSQL_DB_NAME = process.env.MYSQL_DB_NAME;
+const MYSQL_DB_PORT = process.env.MYSQL_DB_PORT;
+
+console.log(MYSQL_DB_HOST, MYSQL_DB_USER, MYSQL_DB_NAME); // Verifica que se cargaron correctamente
 
 /**
  * Aqui declaramos los flujos hijos, los flujos se declaran de atras para adelante, es decir que si tienes un flujo de este tipo:
