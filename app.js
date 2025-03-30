@@ -4,9 +4,6 @@ const QRPortalWeb = require('@bot-whatsapp/portal')
 const BaileysProvider = require('@bot-whatsapp/provider/baileys')
 const MySQLAdapter = require('@bot-whatsapp/database/mysql')
 
-/**
- * Declaramos las conexiones de MySQL
- */
 require('dotenv').config();
 
 const MYSQL_DB_HOST = process.env.MYSQL_DB_HOST;
@@ -15,76 +12,122 @@ const MYSQL_DB_PASSWORD = process.env.MYSQL_DB_PASSWORD;
 const MYSQL_DB_NAME = process.env.MYSQL_DB_NAME;
 const MYSQL_DB_PORT = process.env.MYSQL_DB_PORT;
 
-console.log(MYSQL_DB_HOST, MYSQL_DB_USER, MYSQL_DB_NAME); // Verifica que se cargaron correctamente
+console.log(MYSQL_DB_HOST, MYSQL_DB_USER, MYSQL_DB_NAME);
 
-/**
- * Aqui declaramos los flujos hijos, los flujos se declaran de atras para adelante, es decir que si tienes un flujo de este tipo:
- *
- *          Menu Principal
- *           - SubMenu 1
- *             - Submenu 1.1
- *           - Submenu 2
- *             - Submenu 2.1
- *
- * Primero declaras los submenus 1.1 y 2.1, luego el 1 y 2 y al final el principal.
- */
+const flowSecundario = addKeyword(['2', 'siguiente']).addAnswer(['🤪 Hasta Aquí vamos Por Ahora🤪 Hasta luego y gracias por testear el Bot'])
 
-const flowSecundario = addKeyword(['2', 'siguiente']).addAnswer(['📄 Aquí tenemos el flujo secundario'])
+const volverMenuPrincipal = '\n*MENU* Para volver al menú principal.';
 
-const flowDocs = addKeyword(['doc', 'documentacion', 'documentación']).addAnswer(
+const escuelaMinisterialMenu = addKeyword(['MIN','Min','min'])
+    .addAnswer([
+        `Escuela Ministerial:
+        Escriba:
+        (INF) Para Solicitar Información
+        (PGF) Para Preguntas Frecuentes
+        (PRO) Para Reportar un Problema
+        (SUG) Para Realizar una Sugerencia`,
+        volverMenuPrincipal,
+    ]);
+
+const escuelaMaestrosMenu = addKeyword(['MAE','Mae','mae'])
+    .addAnswer([
+        `Escuela de Maestros:
+        Escriba:
+        (INF) Para Solicitar Información
+        (PGF) Para Preguntas Frecuentes
+        (PRO) Para Reportar un Problema
+        (SUG) Para Realizar una Sugerencia`,
+        volverMenuPrincipal,
+    ]);
+
+const bautismosMenu = addKeyword(['BAU','Bau','bau'])
+    .addAnswer([
+        `Bautismos:
+        Escriba:
+        (INF) Para Solicitar Información
+        (PGF) Para Preguntas Frecuentes
+        (PRO) Para Reportar un Problema
+        (SUG) Para Realizar una Sugerencia`,
+        volverMenuPrincipal,
+    ]);
+
+const universidadVidaMenu = addKeyword(['UDV','Udv','udv'])
+    .addAnswer([
+        `Universidad de la Vida:
+        Escriba:
+        (INF) Para Solicitar Información
+        (PGF) Para Preguntas Frecuentes
+        (PRO) Para Reportar un Problema
+        (SUG) Para Realizar una Sugerencia`,
+        volverMenuPrincipal,
+    ]);
+
+const fundacionUSCMenu = addKeyword(['USC','usc','Usc'])
+    .addAnswer([
+        `Fundación Un Sólo Corazón:
+        Escriba:
+        (INF) Para Solicitar Información
+        (PGF) Para Preguntas Frecuentes
+        (PRO) Para Reportar un Problema
+        (SUG) Para Realizar una Sugerencia`,
+        volverMenuPrincipal,
+    ]);
+  
+
+const visionUPMenu = addKeyword(['Vis', 'vis', 'VIS']).addAnswer(
     [
-        '📄 Aquí encontras las documentación recuerda que puedes mejorarla',
-        'https://bot-whatsapp.netlify.app/',
-        '\n*2* Para siguiente paso.',
-    ],
-    null,
-    null,
-    [flowSecundario]
+        `VisionUP:
+        Escriba lo que está en *negritas* para seleccionar cada opción:
+        (MU) Para Manual de Usuario
+        (PGF) Para Preguntas Frecuentes
+        (PRO) Para Reportar un Problema
+        (SUG) Para Realizar una Sugerencia`,
+        volverMenuPrincipal,
+    ]
 )
 
-const flowTuto = addKeyword(['tutorial', 'tuto']).addAnswer(
+const eventosG12Menu = addKeyword(['EG12', 'G12','eg12','g12']).addAnswer(
     [
-        '🙌 Aquí encontras un ejemplo rapido',
-        'https://bot-whatsapp.netlify.app/docs/example/',
-        '\n*2* Para siguiente paso.',
-    ],
-    null,
-    null,
-    [flowSecundario]
+        `Eventos G12:
+        Escriba lo que está en *negritas* para seleccionar cada opción:
+        (MU) Para Manual de Usuario
+        (PGF) Para Preguntas Frecuentes
+        (PRO) Para Reportar un Problema
+        (SUG) Para Realizar una Sugerencia`,
+        volverMenuPrincipal,
+    ]
 )
 
-const flowGracias = addKeyword(['gracias', 'grac']).addAnswer(
+const capacitacionDestinoMenu = addKeyword(['cd', 'CD','Cd']).addAnswer(
     [
-        '🚀 Puedes aportar tu granito de arena a este proyecto',
-        '[*opencollective*] https://opencollective.com/bot-whatsapp',
-        '[*buymeacoffee*] https://www.buymeacoffee.com/leifermendez',
-        '[*patreon*] https://www.patreon.com/leifermendez',
-        '\n*2* Para siguiente paso.',
-    ],
-    null,
-    null,
-    [flowSecundario]
+        `Capacitación Destino:
+        Escriba lo que está en *negritas* para seleccionar cada opción:
+        (INF) Para Solicitar Información
+        (PGF) Para Preguntas Frecuentes
+        (PRO) Para Reportar un Problema
+        (SUG) Para Realizar una Sugerencia`,
+        volverMenuPrincipal,
+    ]
 )
 
-const flowDiscord = addKeyword(['discord']).addAnswer(
-    ['🤪 Únete al discord', 'https://link.codigoencasa.com/DISCORD', '\n*2* Para siguiente paso.'],
-    null,
-    null,
-    [flowSecundario]
-)
-
-const flowPrincipal = addKeyword(['hola', 'ole', 'alo'])
-    .addAnswer('🙌 Hola bienvenido a este *Chatbot*')
+const flowPrincipal = addKeyword(['hola', 'Hola', 'Hola'])
+    .addAnswer('¡Hola! Bienvenidos a la plataforma de soporte de MCI SANTIAGO')
     .addAnswer(
         [
-            'te comparto los siguientes links de interes sobre el proyecto',
-            '👉 *doc* para ver la documentación',
-            '👉 *gracias*  para ver la lista de videos',
-            '👉 *discord* unirte al discord',
+            `Escriba lo que está en *negritas* para seleccionar cada opción:
+            👉*EG12* Para Eventos G12
+            👉*VIS*  Para VisionUP
+            👉*CD*   Para Capacitación Destino
+            👉*MIN*  Para Escuela Ministerial
+            👉*MAE*  Para Escuela de Maestros
+            👉*BAU*  Para Bautismos
+            👉*UDV*  Para Universidad de la Vida
+            👉*USC*  Para Fundación Un Sólo Corazón`,
         ],
         null,
         null,
-        [flowDocs, flowGracias, flowTuto, flowDiscord]
+        [visionUPMenu, capacitacionDestinoMenu, eventosG12Menu, fundacionUSCMenu,
+        universidadVidaMenu,bautismosMenu,escuelaMaestrosMenu,escuelaMinisterialMenu]
     )
 
 const main = async () => {
@@ -105,4 +148,4 @@ const main = async () => {
     QRPortalWeb()
 }
 
-main()
+main();

@@ -3,3 +3,4 @@ bot_sessions
 .env
 queue.class.log
 core.class.log
+bot.qr.png
